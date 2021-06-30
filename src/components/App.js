@@ -1,16 +1,26 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Header from "./Header";
 import Profile from "./Profile";
+// import the provider
+import { UserProvider } from "../context/User";
+import { ThemeProvider } from "../context/theme";
+import {ThemeContext} from "../context/theme"
 
 function App() {
-  const [theme, setTheme] = useState("dark");
-  const [user, setUser] = useState(null);
+  const {theme} = useContext(ThemeContext)
+  console.log(theme)
   return (
     <main className={theme}>
-      <Header theme={theme} setTheme={setTheme} user={user} setUser={setUser} />
-      <Profile theme={theme} user={user} />
+      {/* wrap components that need access to context data in the provider*/}
+      <UserProvider>
+      <ThemeProvider>
+        <Header />
+        <Profile />
+      </ThemeProvider>
+      </UserProvider>
     </main>
   );
 }
 
 export default App;
+
